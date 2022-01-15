@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import * as fromUser from './components/store/user/user.reducer';
 import { UserEffects } from './components/store/user/user.effects';
 import { AddHeaderInterceptor } from 'config/config.headerInterceptor';
+import { RegisterComponent } from './components/register/register.component';
 
 
 
@@ -24,7 +25,8 @@ import { AddHeaderInterceptor } from 'config/config.headerInterceptor';
   declarations: [
     AppComponent,
     NavComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

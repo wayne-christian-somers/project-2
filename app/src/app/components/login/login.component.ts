@@ -1,4 +1,4 @@
-import { addUser } from './../store/user/user.actions';
+import { login } from './../store/user/user.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { timingSafeEqual } from 'crypto';
@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // method called when "register" button is pressed in UI
+  // method called when "login" button is pressed in UI
   onSubmit(email: string, password: string) {
-    this.store.dispatch(addUser({email: email, password: password}));
+    this.store.dispatch(login({email: email, password: password}));
   }
 }
