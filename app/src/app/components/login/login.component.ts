@@ -1,9 +1,14 @@
+
+
 import { addUser } from './../store/user/user.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { timingSafeEqual } from 'crypto';
+
 import * as fromStore from '../store/user/user.reducer';
 import { stringify } from 'querystring';
+import { User } from 'src/models/user';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -11,8 +16,11 @@ import { stringify } from 'querystring';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  user$: Observable<User>;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store<User>) {
+      this.user$ = store.select(user => user)
+  }
 
   ngOnInit(): void {
   }
