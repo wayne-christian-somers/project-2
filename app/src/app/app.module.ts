@@ -8,11 +8,9 @@ import { NavComponent } from './components/nav/nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-// import { reducers, metaReducers, reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AppEffects } from './app.effects';
-import { reducers, metaReducers, reducers, metaReducers, reducers, metaReducers } from './store';
+
 
 @NgModule({
   declarations: [
@@ -25,8 +23,7 @@ import { reducers, metaReducers, reducers, metaReducers, reducers, metaReducers 
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([AppEffects]),
-    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
