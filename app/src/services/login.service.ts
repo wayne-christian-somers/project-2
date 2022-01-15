@@ -7,7 +7,12 @@ import { User } from '../models/user';
 export class loginService {
 
   constructor (private http: HttpClient) {}
-  login() {
-   return this.http.post('/login', new User());
+
+  register(user : User) {
+    return this.http.post('/user/register', user)
+  }
+
+  login(user: User) {
+   return this.http.post('/user/login', user);
   }
 }
