@@ -1229,13 +1229,6 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-1.0.0.tgz#3fdf5798f0b49e90155896f6291df186eac06c83"
   integrity sha512-9oLAnygRMi8Q5QkYEU4XWK04B+nuoXoxjRvRxgjuChkLZFBja0YPSgdZ7dZtwhncLBcQe/I/E+fLuk5qxcYVJA==
 
-"@ngrx/data@^13.0.2":
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/@ngrx/data/-/data-13.0.2.tgz#f9ef155bf6fdd874ce6b82a76ce5f2f2cb09a0de"
-  integrity sha512-DpPxmtmG9AprXABmreXH7ilHQDGawHFJyNUOR/WS+dstamtFO0WMIr4BhNYRdDGBWqcXWNyuEj14ipjKCTfdKw==
-  dependencies:
-    tslib "^2.0.0"
-
 "@ngrx/effects@^13.0.2":
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-13.0.2.tgz#785e54459efaef70ed3754a33d9f4ddd0ff9f033"
@@ -1249,6 +1242,11 @@
   integrity sha512-sAN/YDvDNy4fmCOWU8LfPp8YI8XJcvmO89XTRSoJjo3O9BIbCSEw2gYHe1V7gWHLY5Pr9wiMybKhd4RHtzFHgQ==
   dependencies:
     tslib "^2.0.0"
+
+"@ngrx/schematics@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/schematics/-/schematics-13.0.2.tgz#1c7cacebfd7708ed9c8d4b0098984f13292a17cc"
+  integrity sha512-84LwEv7MBTX49e1wjuXKgemxfmQUBdvfUKfPq7AmrTW99EtHHAuLYc+pL9XrbgKvkvVyVmDt+g6d3iw/80TZ1w==
 
 "@ngrx/store-devtools@^13.0.2":
   version "13.0.2"
