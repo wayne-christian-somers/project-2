@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -13,6 +13,7 @@ import { reducers, metaReducers } from './components/store';
 import { LoginComponent } from './components/login/login.component';
 import * as fromUser from './components/store/user/user.reducer';
 import { UserEffects } from './components/store/user/user.effects';
+import { AddHeaderInterceptor } from 'config/config.headerInterceptor';
 
 
 
@@ -34,7 +35,11 @@ import { UserEffects } from './components/store/user/user.effects';
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     EffectsModule.forFeature([UserEffects]),
   ],
-  providers: [],
+  providers: [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AddHeaderInterceptor ,
+      multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
