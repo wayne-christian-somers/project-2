@@ -6,6 +6,7 @@ import { Observable, EMPTY, of } from 'rxjs';
 
 import * as UserActions from './user.actions';
 import { User } from 'src/models/user';
+import { off } from 'process';
 
 
 
@@ -14,18 +15,32 @@ export class UserEffects {
 
     constructor(private userService: UserService, private actions$: Actions) { }
 
-  addUser$ = createEffect(() => {
+  login$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(UserActions.addUser),
+      ofType(UserActions.login),
       concatMap((action) => {
         let userObject = new User(action.email, action.password);
-        return this.userService.register(userObject).pipe(
-            map(data => UserActions.loadUsersSuccess({ data })),
-            catchError(error => of(UserActions.loadUsersFailure({ error }))))
+        return this.userService.login(userObject).pipe(
+            map(data => UserActions.loginSuccess({ data })),
+            catchError(error => of(UserActions.loginFailure({ error }))))
          } )
 
       )
         })
+
+
+  register$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.register),
+      concatMap((action) => {
+        let userObject = new User(action.email, action.password);
+        return this.userService.register(userObject).pipe(
+          map(data => UserActions.registerSuccess({ data })),
+          catchError(error => of(UserActions.registerFailure({ error })))
+        )
+      })
+    )
+  })
 
 
   loadUsers$ = createEffect(() => {

@@ -14,17 +14,33 @@ export const loadUsersFailure = createAction(
   props<{ error: any }>()
 );
 
-export const addUser = createAction(
-  '[User] Add User',
+export const login = createAction(
+  '[User] Login User',
   props<{email: string, password: string}>()
 );
 
-export const addUserSuccess = createAction(
-  '[User] Add User Success',
+export const loginSuccess = createAction(
+  '[User] Login User Success',
   props<{ data: any }>()
 );
 
-export const addUserFailure = createAction(
-  '[User] Add User Failure',
+export const loginFailure = createAction(
+  '[User] Login User Failure',
+  props<{ error: any }>()
+);
+
+export const register = createAction(
+  '[User] Register User',
+  props<{email: string, password: string}>()
+
+);
+
+export const registerSuccess = createAction(
+  '[User] Register User Success',
+  props<{ data: any }>()
+);
+
+export const registerFailure = createAction(
+  '[User] Register User Failure',
   props<{ error: any }>()
 );

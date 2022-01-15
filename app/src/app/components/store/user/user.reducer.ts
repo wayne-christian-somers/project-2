@@ -20,9 +20,9 @@ export const reducer = createReducer(
   on(UserActions.loadUsersFailure, (state, action) => state),
 
 
-  on(UserActions.addUser, state => state),
-  on(UserActions.addUserSuccess, (state, action) => state),
-  on(UserActions.addUserFailure, (state, action) => state),
+  on(UserActions.login, state => state),
+  on(UserActions.loginSuccess, (state, action) => state),
+  on(UserActions.loginFailure, (state, action) => state),
 
 
 );
