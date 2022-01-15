@@ -1,1 +1,16 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit(getEmail(), getPassword())">
+
+  <label for="email">email: </label>
+  <input id="email" type="text" formControlName="email">
+
+  <label for="password">password: </label>
+  <input id="password" type="text" formControlName="password">
+
+  <button class="button" type="submit">Register</button>
+</form>
+
+
+
+<p>Value: {{ getEmail() }}</p>
+
+<p>Value: {{ getPassword() }}</p>
