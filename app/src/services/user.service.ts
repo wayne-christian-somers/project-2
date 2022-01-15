@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { User } from '../models/user';
-
+import { User } from '../app/components/store/user/user.reducer'
+``
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
@@ -17,5 +17,5 @@ export class UserService {
   login(user: User) {
    return this.http.post(this.baseUrl + 'user/login', user);
   }
-  
+
 }

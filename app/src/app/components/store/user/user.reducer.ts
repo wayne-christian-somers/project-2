@@ -4,12 +4,14 @@ import * as UserActions from './user.actions';
 
 export const userFeatureKey = 'user';
 
-export interface State {
-
+export interface User {
+    email: string;
+    password: string;
 }
 
-export const initialState: State = {
-
+export const initialState: User = {
+    email: '',
+    password: ''
 };
 
 export const reducer = createReducer(

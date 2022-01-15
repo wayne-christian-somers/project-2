@@ -7,6 +7,6 @@ describe('User Selectors', () => {
       [fromUser.userFeatureKey]: {}
     });
 
-    expect(result).toEqual({});
+    expect(result).toEqual({email: '', password: ''});
   });
 });
