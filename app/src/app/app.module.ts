@@ -15,7 +15,9 @@ import * as fromUser from './components/store/user/user.reducer';
 import { UserEffects } from './components/store/user/user.effects';
 import { AddHeaderInterceptor } from 'config/config.headerInterceptor';
 import { RegisterComponent } from './components/register/register.component';
-
+import * as fromCart from './components/store/cart/cart.reducer';
+import { CartEffects } from './components/store/cart/cart.effects';
+import { CartComponent } from './components/cart/cart.component';
 
 
 
@@ -26,7 +28,8 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     NavComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { RegisterComponent } from './components/register/register.component';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forFeature([UserEffects]),
+    EffectsModule.forFeature([UserEffects, CartEffects]),
+    StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,
