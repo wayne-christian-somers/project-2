@@ -11,12 +11,6 @@ import { StoreModule } from '@ngrx/store';
 import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { entityConfig } from '../store/entity-metadata';
 
-const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: 'http://localhost:8080',
-  timeout: 3000, // request timeout
-}
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,9 +25,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig)
   ],
-  providers: [
-    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
