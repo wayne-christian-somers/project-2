@@ -9,7 +9,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { reducers, metaReducers } from './store';
+import { reducers, metaReducers } from './components/store';
+import { LoginComponent } from './components/login/login.component';
+import * as fromUser from './components/store/user/user.reducer';
+import { UserEffects } from './components/store/user/user.effects';
+
 
 
 
@@ -18,17 +22,17 @@ import { reducers, metaReducers } from './store';
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-
-
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, { metaReducers }),
-
+    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    EffectsModule.forFeature([UserEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

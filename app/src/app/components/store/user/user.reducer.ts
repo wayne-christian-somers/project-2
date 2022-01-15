@@ -18,4 +18,10 @@ export const reducer = createReducer(
   on(UserActions.loadUsersSuccess, (state, action) => state),
   on(UserActions.loadUsersFailure, (state, action) => state),
 
+
+  on(UserActions.addUser, state => state),
+  on(UserActions.addUserSuccess, (state, action) => state),
+  on(UserActions.addUserFailure, (state, action) => state),
+
+
 );
