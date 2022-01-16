@@ -8,11 +8,11 @@ import { MainComponent } from './components/main/main.component';
 
 const routes: Routes = [
 
-   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
    {path: 'welcome', component: MainComponent},
    {path: 'register', component: RegisterComponent},
    {path: 'login', component: LoginComponent},
-  {path: '**', component: AppComponent},
+   {path: '**', component: AppComponent},
 
 ];
 
