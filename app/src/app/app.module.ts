@@ -18,6 +18,8 @@ import { RegisterComponent } from './components/register/register.component';
 import * as fromCart from './components/store/cart/cart.reducer';
 import { CartEffects } from './components/store/cart/cart.effects';
 import { CartComponent } from './components/cart/cart.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MainComponent } from './components/main/main.component'
 
 
 
@@ -29,7 +31,8 @@ import { CartComponent } from './components/cart/cart.component';
     NavComponent,
     LoginComponent,
     RegisterComponent,
-    CartComponent
+    CartComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +40,10 @@ import { CartComponent } from './components/cart/cart.component';
     HttpClientModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, { metaReducers }),
-    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    EffectsModule.forRoot(),
     EffectsModule.forFeature([UserEffects, CartEffects]),
     StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
+    ReactiveFormsModule
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,

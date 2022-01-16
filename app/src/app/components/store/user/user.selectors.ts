@@ -3,7 +3,8 @@ import * as fromUser from './user.reducer';
 
 
 
-export const selectUserState = createFeatureSelector<fromUser.State>(
+export const selectUserState = createFeatureSelector<fromUser.User>(
   fromUser.userFeatureKey
 );
+
 
