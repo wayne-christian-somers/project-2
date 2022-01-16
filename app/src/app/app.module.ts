@@ -18,7 +18,8 @@ import { RegisterComponent } from './components/register/register.component';
 import * as fromCart from './components/store/cart/cart.reducer';
 import { CartEffects } from './components/store/cart/cart.effects';
 import { CartComponent } from './components/cart/cart.component';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
+import { MainComponent } from './components/main/main.component'
 
 
 
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms'
     NavComponent,
     LoginComponent,
     RegisterComponent,
-    CartComponent
+    CartComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
