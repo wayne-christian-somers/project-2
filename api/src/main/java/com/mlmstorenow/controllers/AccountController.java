@@ -2,6 +2,7 @@ package com.mlmstorenow.controllers;
 
 import java.util.Optional;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class AccountController {
 	public ResponseEntity<?> login(@Valid @RequestBody User user) {
 		
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
-		if(userlogin.get().getClass().getName().split(".").equals("User")) {
+		if(userlogin.get().getClass().getName().equals("com.mlmstorenow.models.User")) {
 			return ResponseEntity.ok(userv.insertUser(user));
 		}else if(userlogin.get() == null) {
 		return ResponseEntity.of(Optional.empty());
