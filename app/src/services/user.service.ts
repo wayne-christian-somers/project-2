@@ -23,7 +23,7 @@ export class UserService {
   login(user: User) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin':  this.baseUrl + '/register',
+      'Access-Control-Allow-Origin':  this.baseUrl + 'user/register',
       withCredentials: 'true'
     });
    return this.http.post(this.baseUrl + 'user/login', user, {headers});
