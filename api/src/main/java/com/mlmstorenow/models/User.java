@@ -18,25 +18,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 	@Id
-	@Column(name="user_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonView({ JsonViewProfiles.User.class})
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({ JsonViewProfiles.User.class })
 	private int id;
-	
-	@Column(name="email", unique=true)
+
+	@Column(name = "email", unique = true)
 	@Email
 	@NotBlank
 	private String email;
-	
-	@Column(name="passwrd")
+
+	@Column(name = "passwrd")
 	@NotBlank
 	private String password;
 

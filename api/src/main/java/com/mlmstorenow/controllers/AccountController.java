@@ -2,11 +2,11 @@ package com.mlmstorenow.controllers;
 
 import java.util.Optional;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mlmstorenow.models.User;
 import com.mlmstorenow.services.UserService;
 
+@CrossOrigin(origins = {"*"} , allowCredentials = "true")
 @RestController
 public class AccountController {
 
 	@Autowired
 	UserService userv;
 
-	@PostMapping("/user/Register")
-	public ResponseEntity<User> registration(@Valid @RequestBody User user) {
-		return ResponseEntity.ok(userv.insertUser(user));
+	@PostMapping("/register")
+	public User registration(@Valid @RequestBody User user) {
+		return userv.insertUser(user);
 	}
 
-	@PostMapping("user/login ")
+	@PostMapping("/user/login ")
 	public ResponseEntity<?> login(@Valid @RequestBody User user) {
 		
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());

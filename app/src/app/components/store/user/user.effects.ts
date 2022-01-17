@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { UserService } from './../../../../services/user.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -33,8 +34,16 @@ export class UserEffects {
       concatMap((action) =>
 
        this.userService.register({email: action.email, password :action.password}).pipe(
-          map(data => UserActions.registerSuccess({ data })),
-          catchError(error => of(UserActions.registerFailure({ error })))
+          map(data => {
+            console.log("THIS IS OUR DATA OBJECT")
+            console.log(data)
+            return UserActions.registerSuccess({ data })
+          }),
+          catchError(error => {
+            console.log("THIS IS OUR ERROR OBJECT")
+            console.log(error.HttpHeaders)
+            return of(UserActions.registerFailure({ error }))
+          })
         )
       )
     )
