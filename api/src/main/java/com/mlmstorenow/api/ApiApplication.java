@@ -31,7 +31,9 @@ public class ApiApplication {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        // config.setAllowedOrigins(List.of("http://localhost:4200"));
+        // config.addAllowedOrigin("*");
+        config.addAllowedOriginPattern("*");
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.stream(HttpMethod.values()).map(HttpMethod::name).collect(Collectors.toList()));
         source.registerCorsConfiguration("/**", config);
