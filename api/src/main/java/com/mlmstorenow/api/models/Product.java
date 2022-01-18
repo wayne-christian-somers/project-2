@@ -1,4 +1,4 @@
-package com.mlmstorenow.models;
+package com.mlmstorenow.api.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,15 +16,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="shipments")
+@Table(name="produts")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class Shipment {
+public class Product {
 
 	@Id
-	@Column(name="shipment_id")
+	@Column(name="product_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonView({ JsonViewProfiles.User.class})
 	private int id;

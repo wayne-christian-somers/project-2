@@ -1,14 +1,14 @@
-package com.mlmstorenow.services;
+package com.mlmstorenow.api.services;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mlmstorenow.customexception.UnsucessfulLoginException;
-import com.mlmstorenow.customexception.UserNotFoundException;
-import com.mlmstorenow.models.User;
-import com.mlmstorenow.repositories.UserRepository;
+import com.mlmstorenow.api.customexception.UnsucessfulLoginException;
+import com.mlmstorenow.api.customexception.UserNotFoundException;
+import com.mlmstorenow.api.models.User;
+import com.mlmstorenow.api.repositories.UserRepository;
 
 @Service
 public class UserService {
