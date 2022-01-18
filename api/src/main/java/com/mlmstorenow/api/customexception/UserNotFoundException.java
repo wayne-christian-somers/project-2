@@ -1,4 +1,4 @@
-package com.mlmstorenow.customexception;
+package com.mlmstorenow.api.customexception;
 
 import lombok.NoArgsConstructor;
 

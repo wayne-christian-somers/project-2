@@ -1,4 +1,4 @@
-package com.mlmstorenow.models;
+package com.mlmstorenow.api.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
