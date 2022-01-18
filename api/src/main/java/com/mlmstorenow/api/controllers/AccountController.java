@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mlmstorenow.api.models.User;
 import com.mlmstorenow.api.services.UserService;
 
+
+
+
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -25,10 +29,13 @@ public class AccountController {
 	UserService userv;
 
 	@PostMapping("/register")
-	public ResponseEntity<User> registration(@RequestBody User user) { 
+	public ResponseEntity<?> registration(@RequestBody User user) { 
 		System.out.println("in register controller");
-		
-		return ResponseEntity.ok(userv.insertUser(user));
+		if(userv.login(user.getEmail(), user.getPassword())!= null) {
+			userv.insertUser(user);
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/login")
