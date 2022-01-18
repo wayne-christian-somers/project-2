@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,23 +18,20 @@ import com.mlmstorenow.api.services.UserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AccountController {
 
 	@Autowired
 	UserService userv;
 
 	@PostMapping("/register")
-	public ResponseEntity<?> registration(User user) { 
+	public ResponseEntity<User> registration(@RequestBody User user) { 
 		System.out.println("in register controller");
 		
-		if(userv.login(user.getEmail(), user.getPassword()) == null) {
-			userv.insertUser(user);
-		return new ResponseEntity<>(null,HttpStatus.OK);
-		}
-		return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+		return ResponseEntity.ok(userv.insertUser(user));
 	}
 
-	@PostMapping("/login ")
+	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody User user) {
 
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
