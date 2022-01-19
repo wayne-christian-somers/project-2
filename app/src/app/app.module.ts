@@ -19,7 +19,9 @@ import * as fromCart from './components/store/cart/cart.reducer';
 import { CartEffects } from './components/store/cart/cart.effects';
 import { CartComponent } from './components/cart/cart.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MainComponent } from './components/main/main.component'
+import { MainComponent } from './components/main/main.component';
+import * as fromAuth from './components/store/auth/auth.reducer';
+import { AuthEffects } from './components/store/auth/auth.effects'
 
 
 
@@ -41,9 +43,10 @@ import { MainComponent } from './components/main/main.component'
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(),
-    EffectsModule.forFeature([UserEffects, CartEffects]),
+    EffectsModule.forFeature([UserEffects, CartEffects, AuthEffects]),
     StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer)
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,
