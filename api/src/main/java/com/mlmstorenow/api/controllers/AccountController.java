@@ -2,11 +2,11 @@ package com.mlmstorenow.api.controllers;
 
 import java.util.Optional;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,10 +51,11 @@ public class AccountController {
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
 
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.models.User")) {
-			Cookie cookie = new Cookie("Authententicate: ",
-					jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
-			response.addCookie(cookie);
-			return new ResponseEntity<>(null, HttpStatus.OK);
+			HttpHeaders headers = new HttpHeaders();
+	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			  return ResponseEntity.ok()
+	                    .headers(headers)
+	                    .body("SUCCESS");
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
