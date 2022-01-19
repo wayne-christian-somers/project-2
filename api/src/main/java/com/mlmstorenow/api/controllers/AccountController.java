@@ -48,7 +48,7 @@ public class AccountController {
 	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
 			  return ResponseEntity.ok()
 	                    .headers(headers)
-	                    .body("SUCCESS");
+	                    .body(null);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
@@ -77,9 +77,9 @@ public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletRespon
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
 			HttpHeaders headers = new HttpHeaders();
 	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
-			  return ResponseEntity.ok()
+			  return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
 	                    .headers(headers)
-	                    .body("SUCCESS");
+	                    .body(null);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {

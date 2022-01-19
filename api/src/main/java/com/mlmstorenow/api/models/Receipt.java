@@ -52,7 +52,7 @@ public class Receipt {
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "recipt_date")
+	@Column(name = "receipt_date")
 	private Date date;
 
 }
