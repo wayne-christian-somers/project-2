@@ -2,6 +2,8 @@ package com.mlmstorenow.api.controllers;
 
 import java.util.Optional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mlmstorenow.api.models.User;
+import com.mlmstorenow.api.services.EmailService;
+import com.mlmstorenow.api.services.JwtService;
+import com.mlmstorenow.api.services.PaymentService;
 import com.mlmstorenow.api.services.UserService;
-
-
-
-
 
 @RestController
 @RequestMapping("/user")
@@ -27,11 +28,17 @@ public class AccountController {
 
 	@Autowired
 	UserService userv;
+	@Autowired
+	JwtService jws;
+	@Autowired
+	EmailService eserv;
+	@Autowired
+	PaymentService payserv;
 
 	@PostMapping("/register")
-	public ResponseEntity<?> registration(@RequestBody User user) { 
+	public ResponseEntity<?> registration(@RequestBody User user) {
 		System.out.println("in register controller");
-		if(userv.login(user.getEmail(), user.getPassword())!= null) {
+		if (userv.login(user.getEmail(), user.getPassword()) != null) {
 			userv.insertUser(user);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}
@@ -39,11 +46,14 @@ public class AccountController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody User user) {
+	public ResponseEntity<?> login(@Valid @RequestBody User user, HttpServletResponse response) {
 
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
-		
+
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.models.User")) {
+			Cookie cookie = new Cookie("Authententicate: ",
+					jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			response.addCookie(cookie);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
