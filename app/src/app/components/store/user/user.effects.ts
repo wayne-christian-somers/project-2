@@ -37,11 +37,13 @@ export class UserEffects {
           map(data => {
             console.log("THIS IS OUR DATA OBJECT")
             console.log(data)
+            // console.log("THIS IS OUR AUTHORIZATION HEADER")
+            // console.log(data.headers.keys())
             return UserActions.registerSuccess({ data })
           }),
           catchError(error => {
             console.log("THIS IS OUR ERROR OBJECT")
-            console.log(error.HttpHeaders)
+            console.log(error)
             return of(UserActions.registerFailure({ error }))
           })
         )
