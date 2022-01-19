@@ -40,4 +40,10 @@ public class User {
 	@NotBlank
 	private String password;
 
+	public User(@Email @NotBlank String email, @NotBlank String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
 }

@@ -10,12 +10,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mlmstorenow.api.models.User;
+import com.mlmstorenow.api.repositories.UserRepository;
 import com.mlmstorenow.api.services.EmailService;
 import com.mlmstorenow.api.services.JwtService;
 import com.mlmstorenow.api.services.PaymentService;
@@ -34,23 +36,28 @@ public class AccountController {
 	EmailService eserv;
 	@Autowired
 	PaymentService payserv;
+	@Autowired
+	UserRepository urepo;
 
 	@PostMapping("/register")
 	public ResponseEntity<?> registration(@RequestBody User user) {
-		System.out.println("in register controller");
 		if (userv.login(user.getEmail(), user.getPassword()) != null) {
 			userv.insertUser(user);
-			return new ResponseEntity<>(null, HttpStatus.OK);
+			System.out.println(user.toString());
+			HttpHeaders headers = new HttpHeaders();
+	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			  return ResponseEntity.ok()
+	                    .headers(headers)
+	                    .body("SUCCESS");
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody User user, HttpServletResponse response) {
-
+		
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
-
-		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.models.User")) {
+		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
 			HttpHeaders headers = new HttpHeaders();
 	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
 			  return ResponseEntity.ok()
@@ -63,5 +70,23 @@ public class AccountController {
 		}
 
 	}
+	@PatchMapping("/login")
+public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletResponse response) {
+		
+		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
+		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
+			HttpHeaders headers = new HttpHeaders();
+	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			  return ResponseEntity.ok()
+	                    .headers(headers)
+	                    .body("SUCCESS");
+		} else if (userlogin.get().equals("User not found")) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+
+	}
+	
 
 }

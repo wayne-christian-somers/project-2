@@ -25,7 +25,7 @@ public class UserService {
 		try {
 		User user= userrepo.findByEmail(email).orElseThrow(()->new UserNotFoundException());
 			
-		if(user.getEmail()==email && user.getPassword()== password) {
+		if(user.getEmail().equals(email) && user.getPassword().equals(password) ) {
 			
 			return Optional.of(user);
 		}else {
