@@ -1,6 +1,6 @@
 
 import { login } from './../store/user/user.actions';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../store/user/user.reducer';
 import { Observable } from 'rxjs';
@@ -11,7 +11,8 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
   user$: Observable<User>;

@@ -21,7 +21,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './components/main/main.component';
 import * as fromAuth from './components/store/auth/auth.reducer';
-import { AuthEffects } from './components/store/auth/auth.effects'
+import { AuthEffects } from './components/store/auth/auth.effects';
+import { FooterComponent } from './components/footer/footer.component';
+import { LandingComponent } from './components/landing/landing.component'
 
 
 
@@ -34,7 +36,9 @@ import { AuthEffects } from './components/store/auth/auth.effects'
     LoginComponent,
     RegisterComponent,
     CartComponent,
-    MainComponent
+    MainComponent,
+    FooterComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

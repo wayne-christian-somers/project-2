@@ -20,13 +20,22 @@ export class UserEffects {
       concatMap((action) =>
 
       this.userService.login({email: action.email, password :action.password}).pipe(
-            map(data => UserActions.loginSuccess({ data })),
-            catchError(error => of(UserActions.loginFailure({ error }))))
+            map(data => {
+              console.log("THIS IS OUR DATA OBJECT")
+              console.log(data)
+              return UserActions.loginSuccess({ data })
+
+            }),
+            catchError(error => {
+              console.log("THIS IS OUR ERROR OBJECT")
+              console.log(error.HttpHeaders)
+              return of(UserActions.loginFailure({ error }))
+            })
          )
 
       )
         )
-
+  )
 
   register$ = createEffect(() =>
      this.actions$.pipe(

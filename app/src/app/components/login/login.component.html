@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(getEmail(), getPassword())">
+<!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit(getEmail(), getPassword())">
 
   <label for="email">email: </label>
   <input id="email" type="text" formControlName="email">
@@ -13,4 +13,27 @@
 
 <p>Value: {{ getEmail() }}</p>
 
-<p>Value: {{ getPassword() }}</p>
+<p>Value: {{ getPassword() }}</p> -->
+
+<div class="frame">
+  <div class="nav">
+    <ul class="links">
+      <li class="signin-active"><a class="btn" routerLink="/login">Login</a></li>
+      <li class="signup-inactive"><a class="btn" routerLink="/register">Register </a></li>
+    </ul>
+  </div>
+  <div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(getEmail(), getPassword())" class="form-signin"> 
+      <label for="username">Email</label> 
+      <input id="email" formControlName="email" class="form-styling" type="text" placeholder="Email" /> 
+
+      <label for="password">Password</label> 
+      <input id="password" formControlName="password" class="form-styling" type="text" placeholder="password" />
+      
+      <button class="btn-animate btn-signup" type="submit" routerLink="/welcome">Login</button>
+
+    </form>
+    
+  </div>
+
+</div>
