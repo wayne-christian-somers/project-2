@@ -24,4 +24,8 @@ export class UserService {
    return this.http.post(this.baseUrl + 'user/login', user);
   }
 
+  test(user: User) {
+    return this.http.patch(this.baseUrl + 'user/login', user);
+  }
+
 }
