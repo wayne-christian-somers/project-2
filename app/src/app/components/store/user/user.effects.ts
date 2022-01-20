@@ -6,6 +6,7 @@ import { catchError, map, concatMap, mergeMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as UserActions from './user.actions';
+import { Token } from '@angular/compiler';
 
 
 
@@ -27,31 +28,58 @@ export class UserEffects {
       )
         )
 
+  //  register$ = createEffect(() =>
+  //    this.actions$.pipe(
+  //      ofType(UserActions.register),
+  //      concatMap((action) =>
+  //      this.userService.register({email: action.email, password: action.password})
+  //       .pipe(
+  //         map((response:any) => {
+  //           console.log("this is response object")
+  //           console.log(response)
+  //           const keys = response.headers.keys();
+  //           console.log("this is authorization headers")
+  //           console.log(keys)
+  //           // console.log(response.headers.get("Authorization"))
+  //           return UserActions.registerSuccess( response )
+  //         })
+  //       )
+  //      )
+  //    )
+  //  )
+
 
   register$ = createEffect(() =>
      this.actions$.pipe(
       ofType(UserActions.register),
       concatMap((action) =>
 
-       this.userService.register({email: action.email, password :action.password}).pipe(
-          map(data => {
-            console.log("THIS IS OUR DATA OBJECT")
-            console.log(data)
-            // console.log("THIS IS OUR AUTHORIZATION HEADER")
-            // console.log(data.headers.keys())
-            return UserActions.registerSuccess({ data })
-          }),
-          catchError(error => {
-            console.log("THIS IS OUR ERROR OBJECT")
-            console.log(error)
-            return of(UserActions.registerFailure({ error }))
-          })
-        )
+       this.userService.register({email: action.email, password: action.password})
+       .pipe(
+          map((data) => UserActions.registerSuccess({ data })),
+          catchError(error => of(UserActions.registerFailure({ error }))
+        ),
+
+
       )
     )
   )
+  )
 
+    // register$ = createEffect(() =>
+    //  this.actions$.pipe(
+    //   ofType(UserActions.register),
+    //  concatMap((action) => this.userService.register({email: action.email, password :action.password})
+    //   .pipe(
+    //  .map((response: any) => {
+    //     console.log(response.headers)
+    //   }
+    //  )
+    //   )
 
+    //  )
+    // )
+    // )
   loadUsers$ = createEffect(() => {
     return this.actions$.pipe(
 
