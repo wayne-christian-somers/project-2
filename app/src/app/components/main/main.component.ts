@@ -17,8 +17,7 @@ export class MainComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    console.log(environment.WALMART_CONSUMER_ID)
-    console.log(environment.WALMART_PRIVATE_KEY)
+
   }
 
 }
