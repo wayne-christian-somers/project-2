@@ -4,14 +4,17 @@ import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as ProductsActions from './products.actions';
+import { ProductsService } from '../../../../services/products.service';
+import { UserService } from '../../../../services/user.service';
 
 
 
 @Injectable()
 export class ProductsEffects {
+constructor(private actions$: Actions, private productsService: ProductsService) {}
 
-  loadProductss$ = createEffect(() => {
-    return this.actions$.pipe( 
+  loadProductss$ = createEffect(() =>
+   this.actions$.pipe(
 
       ofType(ProductsActions.loadProductss),
       concatMap(() =>
@@ -20,11 +23,21 @@ export class ProductsEffects {
           map(data => ProductsActions.loadProductssSuccess({ data })),
           catchError(error => of(ProductsActions.loadProductssFailure({ error }))))
       )
+   )
     );
-  });
 
-
-
-  constructor(private actions$: Actions) {}
-
+  searchProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.searchProductsByTerm),
+      concatMap((action) =>
+        this.productsService.getProductsByKeyword(action.searchTerm).pipe(
+          map(data => {
+            // ProductsActions.addProuct
+            return ProductsActions.searchProductsByTermSuccess({ data })}),
+          catchError(error => of(ProductsActions.searchProductsByTermFailure({ error }))
+        ),
+      )
+    )
+    )
+    )
 }
