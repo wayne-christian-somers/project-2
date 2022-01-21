@@ -9,7 +9,7 @@ export interface ProductsInCart {
 }
 
 export const initialState: ProductsInCart = {
-  productsInCart: new Array()
+  productsInCart: [{}, {}, {}]
 };
 
 export const reducer = createReducer(
