@@ -11,7 +11,7 @@ import { selectProductsState } from '../store/products/products.selectors';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-products$: Observable<Products>;
+products$: Observable<fromStore.Products>;
 products: fromStore.Product[] = [];
 
   constructor(private store: Store) {
