@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { nextTick } from 'process';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 import { environment } from '../environments/environment';
@@ -13,11 +14,14 @@ const walmart = Walmart(environment.WALMART_API_KEY);
 })
 export class ProductsService {
 
-  constructor() {
+  constructor(private http: HttpClient) {
     console.log(environment.WALMART_API_KEY)
    }
 
-  // register(product : Product) {
+   getProductsByKeyword(searchTerm: string) {
+     let url : string = "//api.walmartlabs.com/v1/search?apiKey=" + environment.WALMART_API_KEY + "&query=" + searchTerm;
+     return this.http.get(url);
+   }
 
-  // }
+
 }
