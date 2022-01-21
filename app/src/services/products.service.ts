@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { nextTick } from 'process';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -18,9 +17,19 @@ export class ProductsService {
     console.log(environment.WALMART_API_KEY)
    }
 
+       walmartHttpOptions = {
+      headers: new HttpHeaders({
+        'WM_SEC.KEY_VERSION': '1',
+        "WM_CONSUMER.ID": "environment.WALMART_API_KEY",
+        "WM_CONSUMER.INTIMESTAMP": Date.now().toString(),
+        WM_SEC.AUTH_SIGNATURE
+
+      })
+    }
+
    getProductsByKeyword(searchTerm: string) {
      let url : string = "//api.walmartlabs.com/v1/search?apiKey=" + environment.WALMART_API_KEY + "&query=" + searchTerm;
-     return this.http.get(url);
+     return this.http.get(url, this.walmartHttpOptions);
    }
 
 
