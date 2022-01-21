@@ -17,11 +17,15 @@ export class UserService {
   register(user : User) {
     console.log("this is user data in register method");
     console.log(user);
-    return this.http.post(this.baseUrl + 'user/register', user)
+    return this.http.post(this.baseUrl + 'user/register', user, {observe: 'response'})
   }
 
   login(user: User) {
    return this.http.post(this.baseUrl + 'user/login', user);
+  }
+
+  test(user: User) {
+    return this.http.patch(this.baseUrl + 'user/login', user);
   }
 
 }

@@ -1,14 +1,17 @@
+import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
+import { Product } from '../products/products.reducer';
+import fakeProducts from '../../../../assets/fakeProducts.json'
 import * as CartActions from './cart.actions';
 
 export const cartFeatureKey = 'cart';
 
-export interface State {
-
+export interface ProductsInCart {
+  productsInCart: Product[]
 }
 
-export const initialState: State = {
-
+export const initialState: ProductsInCart = {
+  productsInCart: fakeProducts.items
 };
 
 export const reducer = createReducer(
@@ -18,4 +21,11 @@ export const reducer = createReducer(
   on(CartActions.loadCartsSuccess, (state, action) => state),
   on(CartActions.loadCartsFailure, (state, action) => state),
 
+  on(CartActions.addProductToCart, (state, { product }) => {
+    const newArrayWithAddedProduct = [...state.productsInCart, product]
+    const newProductsObject = {
+      productsInCart: newArrayWithAddedProduct
+    }
+    return newProductsObject
+  })
 );

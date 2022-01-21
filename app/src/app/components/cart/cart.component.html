@@ -1,1 +1,7 @@
-<p>cart works!</p>
+<h1> Shopping Cart </h1>
+
+<li *ngFor="let productInCart of productsInCart">
+
+    <img [src]="productInCart.mediumImage">
+    
+</li>
