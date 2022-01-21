@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { nextTick } from 'process';
 
-var walmart = require('walmart')(environment.WALMART_API_KEY);
+
+import { environment } from '../environments/environment';
+import * as Walmart from 'walmart';
+const walmart = Walmart(environment.WALMART_API_KEY);
+
+
 
 @Injectable({
   providedIn: 'root'
