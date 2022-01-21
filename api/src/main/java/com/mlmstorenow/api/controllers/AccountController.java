@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,11 +43,9 @@ public class AccountController {
 		if (userv.login(user.getEmail(), user.getPassword()) != null) {
 			userv.insertUser(user);
 			System.out.println(user.toString());
-			HttpHeaders headers = new HttpHeaders();
-	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
 			  return ResponseEntity.ok()
-	                    .headers(headers)
-	                    .body(null);
+					  .body(authorization);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
@@ -58,11 +55,9 @@ public class AccountController {
 		
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
-			HttpHeaders headers = new HttpHeaders();
-	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
+			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
 			  return ResponseEntity.ok()
-	                    .headers(headers)
-	                    .body("SUCCESS");
+					  .body(authorization);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -75,11 +70,8 @@ public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletRespon
 		
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
-			HttpHeaders headers = new HttpHeaders();
-	        headers.add(HttpHeaders.AUTHORIZATION, jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize());
-			  return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-	                    .headers(headers)
-	                    .body(null);
+			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
+			  return new ResponseEntity<>(authorization, HttpStatus.I_AM_A_TEAPOT);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {

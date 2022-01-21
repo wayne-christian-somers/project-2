@@ -1,9 +1,10 @@
 package com.mlmstorenow.api.services;
 
-import java.security.SecureRandom;
+import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.stereotype.Service;
 
+import com.mlmstorenow.api.config.ConfigProperties;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -17,8 +18,9 @@ import com.nimbusds.jwt.SignedJWT;
 
 @Service
 public class JwtService {
-	static SecureRandom random = new SecureRandom();
-	static byte[] sharedSecret = new byte[32];
+	static String key = ConfigProperties.getConfigProp("secret_key");
+	static String base64Key = DatatypeConverter.printBase64Binary(key.getBytes());
+	byte[] sharedSecret = DatatypeConverter.parseBase64Binary(base64Key);
 	static JWSSigner signer; // Create HMAC signer
 
 	public SignedJWT tokenGenerator(String data) {
@@ -51,14 +53,13 @@ public class JwtService {
 			return signedJWT.verify(verifier);
 
 		} catch (KeyLengthException e) {
-			e.printStackTrace();
+			
 
 		} catch (JOSEException e) {
-			e.printStackTrace();
+			
 
 		} catch (java.text.ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		return false;
 	}

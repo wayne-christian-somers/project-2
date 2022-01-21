@@ -36,7 +36,7 @@
 			<artifactId>nimbus-jose-jwt</artifactId>
 			<version>9.15.2</version>
 		</dependency>
-		  <dependency>                    
+		<dependency>
 			<groupId>com.braintreepayments.gateway</groupId>
 			<artifactId>braintree-java</artifactId>
 			<version>2.80.0</version>
@@ -78,6 +78,11 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.shipengine</groupId>
+			<artifactId>shipengine</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
