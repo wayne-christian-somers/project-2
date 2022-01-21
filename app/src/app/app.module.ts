@@ -24,7 +24,9 @@ import * as fromAuth from './components/store/auth/auth.reducer';
 import { AuthEffects } from './components/store/auth/auth.effects';
 import * as fromProducts from './components/store/products/products.reducer';
 import { ProductsEffects } from './components/store/products/products.effects';
-import { ProductsComponent } from './components/products/products.component'
+import { ProductsComponent } from './components/products/products.component';
+import { ProductComponent } from './components/product/product.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component'
 
 
 
@@ -38,7 +40,9 @@ import { ProductsComponent } from './components/products/products.component'
     RegisterComponent,
     CartComponent,
     MainComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,

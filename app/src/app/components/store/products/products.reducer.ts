@@ -3,12 +3,16 @@ import * as ProductsActions from './products.actions';
 
 export const productsFeatureKey = 'products';
 
-export interface State {
+export interface Product {
 
 }
 
-export const initialState: State = {
+export interface Products {
+  products: Product[]
+}
 
+export const initialState: Products = {
+  products: new Array()
 };
 
 export const reducer = createReducer(
