@@ -22,4 +22,12 @@ export const reducer = createReducer(
   on(ProductsActions.loadProductssSuccess, (state, action) => state),
   on(ProductsActions.loadProductssFailure, (state, action) => state),
 
+  on(ProductsActions.addProductToProducts, (state, { product }) => {
+    const newArrayWithAddedProduct = [...state.products, product]
+    const newProductsObject = {
+      products: newArrayWithAddedProduct
+    }
+    return newProductsObject
+  })
+
 );

@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Product } from './products.reducer';
 
 export const loadProductss = createAction(
   '[Products] Load Products'
@@ -27,6 +28,11 @@ export const searchProductsByTermSuccess  = createAction(
 export const searchProductsByTermFailure  = createAction(
   '[Products] Search Products By Term Failure',
   props<{ error: any }>()
+);
+
+export const addProductToProducts = createAction(
+  '[Products] Add Product to Products',
+  props<{product: Product}>()
 );
 
 // export const addProduct = createAction(

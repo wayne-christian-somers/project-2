@@ -21,9 +21,11 @@ export class CartIconComponent implements OnInit {
     this.productsInCart$ = store.select(selectCartState)
 
     this.productsInCart$.subscribe((productsInCart) => {
+
       this.numberOfProducts = productsInCart.productsInCart.length
       console.log("THIS IS PRODUCTS LENGTH in subscribe")
       console.log(productsInCart.productsInCart.length)
+
     })
 
 
@@ -34,6 +36,10 @@ export class CartIconComponent implements OnInit {
   }
 
   getNumberOfProducts = () : number => this.numberOfProducts;
+
+  getNumberOfProductsMultiLIne() : number {
+    return this.numberOfProducts;
+  }
 
 
 }

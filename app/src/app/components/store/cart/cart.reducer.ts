@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { Product } from '../products/products.reducer';
 import * as CartActions from './cart.actions';
@@ -9,7 +10,7 @@ export interface ProductsInCart {
 }
 
 export const initialState: ProductsInCart = {
-  productsInCart: [{}, {}, {}]
+  productsInCart: []
 };
 
 export const reducer = createReducer(
@@ -19,4 +20,11 @@ export const reducer = createReducer(
   on(CartActions.loadCartsSuccess, (state, action) => state),
   on(CartActions.loadCartsFailure, (state, action) => state),
 
+  on(CartActions.addProductToCart, (state, { product }) => {
+    const newArrayWithAddedProduct = [...state.productsInCart, product]
+    const newProductsObject = {
+      productsInCart: newArrayWithAddedProduct
+    }
+    return newProductsObject
+  })
 );

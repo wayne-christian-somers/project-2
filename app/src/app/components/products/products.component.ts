@@ -16,8 +16,10 @@ products: fromStore.Product[] = [];
 
   constructor(private store: Store) {
     this.products$ = store.select(selectProductsState)
-    this.products$.subscribe((product : fromStore.Product) => {
-      this.products.push(product);
+    this.products$.subscribe((products : fromStore.Products) => {
+      // const newProductsArray = [...this.products, product]
+      console.log("a new product  is added to products in products.component.ts")
+      this.products = products.products;
     })
    }
 
