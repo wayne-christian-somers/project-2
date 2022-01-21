@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import WalmartUtil from '../utility/walmartUtil'
 
 import { environment } from '../environments/environment';
-import * as Walmart from 'walmart';
-const walmart = Walmart(environment.WALMART_API_KEY);
+
+
 
 
 
@@ -13,23 +14,31 @@ const walmart = Walmart(environment.WALMART_API_KEY);
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) {
-    console.log(environment.WALMART_API_KEY)
+  constructor(private http: HttpClient, private walmartUtil: WalmartUtil) {
+
    }
 
-       walmartHttpOptions = {
+
+
+
+
+
+   getProductsByKeyword(searchTerm: string) {
+    let walmartHeaders = this.walmartUtil.generateWalmartAuthHeaders(environment.WALMART_CONSUMER_ID, "1", Buffer.from(environment.WALMART_PRIVATE_KEY, 'base64').toString())
+
+    let walmartHttpOptions = {
       headers: new HttpHeaders({
         'WM_SEC.KEY_VERSION': '1',
-        "WM_CONSUMER.ID": "environment.WALMART_API_KEY",
-        "WM_CONSUMER.INTIMESTAMP": Date.now().toString(),
-        WM_SEC.AUTH_SIGNATURE
+        "WM_CONSUMER.ID": walmartHeaders['WM_CONSUMER.ID'],
+        "WM_CONSUMER.INTIMESTAMP": walmartHeaders['WM_CONSUMER.INTIMESTAMP'].toString(),
+        "WM_SEC.AUTH_SIGNATURE": walmartHeaders['WM_SEC.AUTH_SIGNATURE'],
 
       })
     }
 
-   getProductsByKeyword(searchTerm: string) {
-     let url : string = "//api.walmartlabs.com/v1/search?apiKey=" + environment.WALMART_API_KEY + "&query=" + searchTerm;
-     return this.http.get(url, this.walmartHttpOptions);
+    //  let url : string = "https://developer.api.walmart.com/api-proxy/service/affil/product/v2/search?"
+    let url : string = "https://developer.api.walmart.com/api-proxy/service/affil/product/v2/trends"
+     return this.http.get(url, walmartHttpOptions);
    }
 
 

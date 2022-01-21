@@ -1,13 +1,15 @@
 const { writeFile } = require('fs');
 const { argv } = require('yargs');
 
+
+
 // read environment variables from .env file
 require('dotenv').config();
 // read the command line arguments passed with yargs
 const environment = argv.environment;
 const isProduction = environment === 'prod';
 
-if ( !process.env["WALMART_API_KEY"]) {
+if ( !process.env["WALMART_CONSUMER_ID"] || !process.env["WALMART_PRIVATE_KEY"]) {
    console.error('All the required environment variables were not provided!');
    process.exit(-1);
 }
@@ -21,7 +23,8 @@ const targetPath = isProduction
 const environmentFileContent = `
 export const environment = {
    production: ${isProduction},
-   WALMART_API_KEY: "${process.env["WALMART_API_KEY"]}",
+   WALMART_PRIVATE_KEY: "${process.env["WALMART_PRIVATE_KEY"]}",
+   WALMART_CONSUMER_ID: "${process.env["WALMART_CONSUMER_ID"]}",
 };
 `;
 // write the content to the respective file

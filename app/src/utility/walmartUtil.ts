@@ -1,8 +1,8 @@
-import nodeRSA from 'node-rsa';
+const nodeRSA = require('node-rsa');
 
-class WalmartUtil {
+export default class WalmartUtil {
 
-   generateWalmartAuthHeaders = (consumerId: string, keyVer: string, privateKey: string) => {
+  generateWalmartAuthHeaders = (consumerId: string, keyVer: string, privateKey: string) => {
     const hashList = {
         "WM_CONSUMER.ID": consumerId,
         "WM_CONSUMER.INTIMESTAMP": Date.now(),
@@ -10,7 +10,7 @@ class WalmartUtil {
     };
 
     const sortedHashString = `${hashList["WM_CONSUMER.ID"]}\n${hashList["WM_CONSUMER.INTIMESTAMP"]}\n${hashList["WM_SEC.KEY_VERSION"]}\n`;
-    const signer = new NodeRSA(privateKey, "pkcs1");
+    const signer = new nodeRSA(privateKey, "pkcs1");
     const signature = signer.sign(sortedHashString);
     const signature_enc = signature.toString("base64");
 
@@ -20,6 +20,6 @@ class WalmartUtil {
         "WM_CONSUMER.ID": hashList["WM_CONSUMER.ID"],
         "WM_SEC.KEY_VERSION": hashList["WM_SEC.KEY_VERSION"],
     };
-}
+  }
 
 }
