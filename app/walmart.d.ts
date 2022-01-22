@@ -1,1 +1,4 @@
-declare module 'walmart';
+declare module "*.json" {
+    const value: any;
+    export default value;
+}

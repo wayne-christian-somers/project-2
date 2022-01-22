@@ -1,6 +1,7 @@
 import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { Product } from '../products/products.reducer';
+import fakeProducts from '../../../../assets/fakeProducts.json'
 import * as CartActions from './cart.actions';
 
 export const cartFeatureKey = 'cart';
@@ -10,7 +11,7 @@ export interface ProductsInCart {
 }
 
 export const initialState: ProductsInCart = {
-  productsInCart: []
+  productsInCart: fakeProducts.items
 };
 
 export const reducer = createReducer(
