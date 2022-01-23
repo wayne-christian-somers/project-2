@@ -12,9 +12,38 @@ export interface Products {
 }
 
 export const initialState: Products = {
-  products: fakeProducts.items
-
+  products: fakeProducts.items,
 };
+
+export interface PaymentBody {
+    payment:  Payment;
+    shipment: Shipment;
+    items:    Item[];
+}
+
+export interface Item {
+    name:   string;
+    amount: number;
+}
+
+export interface Payment {
+    charge_amount: string;
+    nonce:         string;
+    deviceData:    string;
+}
+
+export interface Shipment {
+    name:    string;
+    company: string;
+    street1: string;
+    city:    string;
+    state:   string;
+    zip:     string;
+    country: string;
+    phone:   string;
+    email:   string;
+}
+
 
 export const reducer = createReducer(
   initialState,
@@ -29,6 +58,8 @@ export const reducer = createReducer(
       products: newArrayWithAddedProduct
     }
     return newProductsObject
-  })
+  }),
+
+  on(ProductsActions.submitPayment, (state, action) => state)
 
 );

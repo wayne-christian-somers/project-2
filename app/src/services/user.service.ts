@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { User } from '../app/components/store/user/user.reducer'
+import { baseURL } from 'config/config.service';
 ``
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
 
-  private baseUrl: string = "http://localhost:5000/api/"
+
 
 
 
@@ -17,15 +18,15 @@ export class UserService {
   register(user : User) {
     console.log("this is user data in register method");
     console.log(user);
-    return this.http.post(this.baseUrl + 'user/register', user, {observe: 'response'})
+    return this.http.post(baseURL + 'user/register', user, {observe: 'response'})
   }
 
   login(user: User) {
-   return this.http.post(this.baseUrl + 'user/login', user);
+   return this.http.post(baseURL + 'user/login', user);
   }
 
   test(user: User) {
-    return this.http.patch(this.baseUrl + 'user/login', user);
+    return this.http.patch(baseURL + 'user/login', user);
   }
 
 }

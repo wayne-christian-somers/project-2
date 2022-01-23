@@ -1,0 +1,28 @@
+<form [formGroup]="paymentForm" (ngSubmit)="onSubmit(getFirstName(), getLastName(), getStreet(), getCompany(), getCity(), getState(), getZip(), getCountry(), getPhone(), getEmail())">
+
+  <label for="firstName">firstName: </label>
+  <input id="firstName" type="email" formControlName="firstName">
+
+  <label for="lastName">lastName: </label>
+  <input id="lastName" type="text" formControlName="lastName">
+
+    <label for="street">street: </label>
+    <input id="street" type="text" formControlName="street">
+  <label for="company">company: </label>
+  <input id="company" type="text" formControlName="company">
+
+  <label for="city">city: </label>
+  <input id="city" type="text" formControlName="city">
+  <label for="state">state: </label>
+  <input id="state" type="text" formControlName="state">
+  <label for="zip">zip: </label>
+  <input id="zip" type="text" formControlName="zip">
+  <label for="country">country: </label>
+  <input id="country" type="text" formControlName="country">
+  <label for="phone">phone: </label>
+  <input id="phone" type="text" formControlName="phone">
+  <label for="email">email: </label>
+  <input id="email" type="text" formControlName="email">
+
+  <button class="button" type="submit">Submit Order</button>
+</form>

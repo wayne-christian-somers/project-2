@@ -6,12 +6,14 @@ import { Observable, EMPTY, of } from 'rxjs';
 import * as ProductsActions from './products.actions';
 import { ProductsService } from '../../../../services/products.service';
 import { UserService } from '../../../../services/user.service';
+import { PaymentsService } from '../../../../services/payments.service';
+import { PaymentBody } from 'src/app/components/store/products/products.reducer';
 
 
 
 @Injectable()
 export class ProductsEffects {
-constructor(private actions$: Actions, private productsService: ProductsService) {}
+constructor(private actions$: Actions, private productsService: ProductsService, private paymentsService: PaymentsService) {}
 
   loadProductss$ = createEffect(() =>
    this.actions$.pipe(
@@ -40,4 +42,32 @@ constructor(private actions$: Actions, private productsService: ProductsService)
     )
     )
     )
+
+
+
+
+
+    submitPayment$ = createEffect(() =>
+            this.actions$.pipe(
+              ofType(ProductsActions.submitPayment),
+              concatMap((action) => {
+
+              const paymentBody : PaymentBody = {
+                payment: action.payment,
+                shipment: action.shipment,
+                items: action.items
+              }
+              console.log("this is payment body object")
+              console.log(paymentBody);
+              return this.paymentsService.submitPayment(paymentBody).pipe(
+                  map(data => {
+                    console.log("this is data object")
+                    console.log(data)
+                    return ProductsActions.submitPaymentSuccess({ data })}),
+                    catchError(error => of(ProductsActions.submitPaymentFailure({ error }))
+                ),
+              )
+                  })
+          )
+       )
 }
