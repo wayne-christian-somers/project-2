@@ -1,3 +1,26 @@
-<li *ngFor="let product of products">
-  <app-product [product]="product"></app-product>
-</li>
+
+<!-- <li *ngFor="let product of products">
+  <app-product [product]="product"></app-product> 
+</li> -->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<div class="container">
+  <h3 class="h3"> All Products </h3>
+  <div class="row" >
+      <div id="prod-id" class="col-md-3 col-sm-6" *ngFor="let product of products">
+
+
+      <app-product [product]="product"></app-product> 
+    
+
+  </div>
+</div>
+
+</div>
+<hr>
