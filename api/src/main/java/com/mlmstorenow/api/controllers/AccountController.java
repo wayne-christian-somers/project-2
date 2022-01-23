@@ -42,22 +42,22 @@ public class AccountController {
 	public ResponseEntity<?> registration(@RequestBody User user) {
 		if (userv.login(user.getEmail(), user.getPassword()) != null) {
 			userv.insertUser(user);
-			System.out.println(user.toString());
-			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
-			  return ResponseEntity.ok()
-					  .body(authorization);
+
+			String authorization = jws.tokenGenerator(user.getEmail()).serialize();
+			return ResponseEntity.ok().body(authorization);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody User user, HttpServletResponse response) {
-		
+
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
-			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
-			  return ResponseEntity.ok()
-					  .body(authorization);
+
+			String authorization = jws.tokenGenerator(user.getEmail()).serialize();
+
+			return ResponseEntity.ok().body(authorization);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -65,13 +65,14 @@ public class AccountController {
 		}
 
 	}
+
 	@PatchMapping("/login")
-public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletResponse response) {
-		
+	public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletResponse response) {
+
 		Optional<?> userlogin = userv.login(user.getEmail(), user.getPassword());
 		if (userlogin.get().getClass().getName().equals("com.mlmstorenow.api.models.User")) {
-			String authorization = jws.tokenGenerator("email: " + user.getEmail() + ", pasword: " + user.getPassword()).serialize();
-			  return new ResponseEntity<>(authorization, HttpStatus.I_AM_A_TEAPOT);
+			String authorization = jws.tokenGenerator(user.getEmail()).serialize();
+			return new ResponseEntity<>(authorization, HttpStatus.I_AM_A_TEAPOT);
 		} else if (userlogin.get().equals("User not found")) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -79,6 +80,5 @@ public ResponseEntity<?> login2(@Valid @RequestBody User user, HttpServletRespon
 		}
 
 	}
-	
 
 }

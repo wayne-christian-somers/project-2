@@ -1,38 +1,41 @@
 package com.mlmstorenow.api.services;
 
+import java.util.Map;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Service
 public class EmailService {
-	JavaMailSender emailSender;
 
-	public void sendRegistrationemail(String to){
+	@Autowired
+	private SpringTemplateEngine thymeleafTemplateEngine;
 
-		try {    
-			MimeMessage message = emailSender.createMimeMessage();
+	private JavaMailSender emailSender;
 
-			MimeMessageHelper helper;
-			helper = new MimeMessageHelper(message, true);
-			helper.setFrom("mlmstorenow@gmail.com");
-			helper.setTo(to);
-			helper.setSubject("MLMstore Account Created");
-			helper.setText(
-					"Thank you for registering a new account with mlmstore. \n We truely appreciate your business");
+	public void sendMessageUsingThymeleafTemplate(String to, String subject, Map<String, Object> templateModel)
+			throws MessagingException {
 
-			/*
-			 * FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
-			 * helper.addAttachment("Invoice", file);
-			 */
+		Context thymeleafContext = new Context();
+		thymeleafContext.setVariables(templateModel);
+		String htmlBody = thymeleafTemplateEngine.process("template-thymeleaf.html", thymeleafContext);
 
-			emailSender.send(message);
-		} catch (MessagingException e) {
+		sendHtmlMessage(to, subject, htmlBody);
+	}
 
-		}
-
+	private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		helper.setTo(to);
+		helper.setSubject(subject);
+		helper.setText(htmlBody, true);
+		emailSender.send(message);
 	}
 }

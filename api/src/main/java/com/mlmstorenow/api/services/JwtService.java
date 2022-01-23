@@ -1,5 +1,7 @@
 package com.mlmstorenow.api.services;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.stereotype.Service;
@@ -16,12 +18,18 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Service
 public class JwtService {
 	static String key = ConfigProperties.getConfigProp("secret_key");
 	static String base64Key = DatatypeConverter.printBase64Binary(key.getBytes());
 	byte[] sharedSecret = DatatypeConverter.parseBase64Binary(base64Key);
 	static JWSSigner signer; // Create HMAC signer
+	@Setter
+	@Getter
+	static ArrayList<String> uname;
 
 	public SignedJWT tokenGenerator(String data) {
 
@@ -35,6 +43,8 @@ public class JwtService {
 
 			// Apply the HMAC protection
 			signedJWT.sign(signer);
+
+			uname.add(data);
 
 			return signedJWT;
 		} catch (JOSEException e) {
@@ -53,13 +63,11 @@ public class JwtService {
 			return signedJWT.verify(verifier);
 
 		} catch (KeyLengthException e) {
-			
 
 		} catch (JOSEException e) {
-			
 
 		} catch (java.text.ParseException e) {
-			
+
 		}
 		return false;
 	}
