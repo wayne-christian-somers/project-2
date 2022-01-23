@@ -93,7 +93,7 @@ export class PaymentComponent implements OnInit {
 
     const paymentObject : Payment = {
       charge_amount: `${paymentAmount}`,
-      nonce: 'fakeNonce',
+      nonce: 'fake-valid-visa-nonce',
       deviceData: 'desktop'
     }
 
