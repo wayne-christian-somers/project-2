@@ -1,5 +1,7 @@
 package com.mlmstorenow.api.models;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.shippo.model.Address;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,6 +42,15 @@ public class User {
 	@Column(name = "passwrd")
 	@NotBlank
 	private String password;
+
+	@Column(name = "address_list")
+	private ArrayList<Address> Addresses;
+
+	@Column(name = "cart")
+	private ArrayList<Product> cart;
+
+	@Column(name = "order_history")
+	private ArrayList<Product> orderHistory;
 
 	public User(@Email @NotBlank String email, @NotBlank String password) {
 		super();

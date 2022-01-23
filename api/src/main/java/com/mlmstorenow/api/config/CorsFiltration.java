@@ -1,4 +1,4 @@
-package com.mlmstorenow.api.filters;
+package com.mlmstorenow.api.config;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

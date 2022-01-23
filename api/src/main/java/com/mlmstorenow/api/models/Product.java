@@ -28,4 +28,13 @@ public class Product {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonView({ JsonViewProfiles.User.class})
 	private int id;
+	
+	@Column(name="product_name")
+	private String productName;
+	
+	@Column(name="product_amount")
+	private int amount;
+	
+	@Column(name="user_id")
+	private int Userid;
 }
