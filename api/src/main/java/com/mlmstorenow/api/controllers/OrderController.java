@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,14 +39,19 @@ public class OrderController {
 
 	@SuppressWarnings("unchecked")
 	@PostMapping("/order/submit")
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public ResponseEntity<?> submitOrder(@RequestBody() Map<String, Object> paymentMap
 	// ,@RequestHeader("authorization") String auth
 	) {
+		System.out.println("in order submit");
+		System.out.println(paymentMap.keySet());
 
 		Map<String, String> pmap = (Map<String, String>) paymentMap.get("payment");
 
 		String transact = pserv.processTransaction(pmap.get("charge_amount"), pmap.get("nonce"),
 				pmap.get("deviceData"));
+		
+		System.out.println(pmap.get("nonce"));
 		if (transact != null) {
 
 			try {

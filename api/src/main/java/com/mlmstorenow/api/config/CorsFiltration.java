@@ -5,13 +5,14 @@ import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebFilter;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-@Component
+@Configuration
 @WebFilter("/*")
 public class CorsFiltration {
 
