@@ -26,9 +26,10 @@ import * as fromProducts from './components/store/products/products.reducer';
 import { ProductsEffects } from './components/store/products/products.effects';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductComponent } from './components/product/product.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component'
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { CartIconComponent } from './components/cart-icon/cart-icon.component'
 
-
+ 
 
 
 
@@ -42,7 +43,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     MainComponent,
     ProductsComponent,
     ProductComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    CartIconComponent
   ],
   imports: [
     BrowserModule,

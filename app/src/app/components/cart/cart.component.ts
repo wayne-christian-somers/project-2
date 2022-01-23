@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import * as fromStore from '../store/cart/cart.reducer';
+import { selectCartState } from '../store/cart/cart.selectors';
+import { Product } from '../store/products/products.reducer';
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +12,19 @@ import * as fromStore from '../store/cart/cart.reducer';
 })
 export class CartComponent implements OnInit {
 
-  constructor(private store: Store) { }
+  productsInCart$ : Observable<fromStore.ProductsInCart>;
+  productsInCart : any[] = [];
+
+  constructor(private store: Store) { 
+
+    this.productsInCart$ = store.select(selectCartState)
+
+    this.productsInCart$.subscribe((productsInCart : fromStore.ProductsInCart) =>{
+      this.productsInCart = productsInCart.productsInCart;
+    })
+      
+      
+  }
 
   ngOnInit(): void {
   }

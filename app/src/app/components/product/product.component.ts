@@ -15,7 +15,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @Input() product : Product = {};
+  @Input() product : any = {};
 
 }
 
