@@ -18,16 +18,15 @@ import com.mlmstorenow.api.models.User;
 @Service
 public class PaymentService {
 
-	
 	// creates static braintreegateway object
 	public static BraintreeGateway getBraintreeGateway() {
 
-			BraintreeGateway gateway = new BraintreeGateway(
-					Environment.SANDBOX, 
-					ConfigProperties.getConfigProp("mechant_id"),
-					ConfigProperties.getConfigProp("public_key"), 
-					ConfigProperties.getConfigProp("private_key"));
-			return gateway;
+		BraintreeGateway gateway = new BraintreeGateway(
+				Environment.SANDBOX,
+				ConfigProperties.getConfigProp("mechant_id"),
+				ConfigProperties.getConfigProp("public_key"),
+				ConfigProperties.getConfigProp("private_key"));
+		return gateway;
 	}
 
 	// pass clientToken to your front-end

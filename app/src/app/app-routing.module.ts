@@ -10,7 +10,7 @@ import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [
 
-   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+   {path: '', redirectTo: 'login', pathMatch: 'full'},
    {path: 'welcome', component: MainComponent},
    {path: 'cart', component: CartComponent},
    {path: 'register', component: RegisterComponent},
