@@ -88,22 +88,20 @@ public class OrderController {
 					e.printStackTrace();
 				}
 				Address addy = user.getAddresses().get(0);
-				System.out.println(paymentMap.get("items"));
-				ArrayList<LinkedHashMap<String, String>> prodMap = (ArrayList<LinkedHashMap<String, String>>) paymentMap
-						.get("items");
-
-				System.out.println(prodMap.get(0).keySet());
-				Product prod = new Product();
-
-				prodMap.stream().forEach(t -> {
-					for (String s : t.keySet()) {
-						prod.setProductName(s);
-						prod.setAmount(Integer.parseInt(t.get(s)));
-						prod.setUserid(user.getId());
-
-						user.getOrderHistory().add(prod);
-					}
-				});
+				/*
+				 * System.out.println(paymentMap.get("items")); ArrayList<LinkedHashMap<String,
+				 * String>> prodMap = (ArrayList<LinkedHashMap<String, String>>) paymentMap
+				 * .get("items");
+				 * 
+				 * System.out.println(prodMap.get(0).keySet()); Product prod = new Product();
+				 * 
+				 * 
+				 * prodMap.stream().forEach(t -> { for (String s : t.keySet()) {
+				 * prod.setProductName(s); prod.setAmount(Integer.parseInt(t.get(s)));
+				 * prod.setUserid(user.getId());
+				 * 
+				 * user.getOrderHistory().add(prod); } });
+				 */
 
 				return ResponseEntity.ok()
 						.body(shipserv.getShippingLabel((String) addy.getName(), (String) addy.getEmail(), addy));

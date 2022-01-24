@@ -40,13 +40,15 @@ public class PaymentService {
 	// Transaction processor
 	public String processTransaction(String chargeAmount, String nonce, String deviceData) {
 
-		BigDecimal bd = BigDecimal.valueOf(Float.parseFloat(chargeAmount));
+		BigDecimal bd = BigDecimal.valueOf(Double.parseDouble(chargeAmount));
+		System.out.println(bd);
 		TransactionRequest request = new TransactionRequest().amount(bd)
 				.paymentMethodNonce(nonce).deviceData(deviceData).options().submitForSettlement(true).done();
 
 		Result<Transaction> transactionResult = getBraintreeGateway().transaction().sale(request);
 		Transaction transaction;
 
+		System.out.println(transactionResult.getMessage());
 		if (transactionResult.isSuccess()) {
 			transaction = transactionResult.getTarget();
 
