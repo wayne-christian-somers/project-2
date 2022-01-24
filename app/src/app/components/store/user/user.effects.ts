@@ -1,19 +1,21 @@
 import { HttpHeaders } from '@angular/common/http';
 import { UserService } from './../../../../services/user.service';
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap, mergeMap } from 'rxjs/operators';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, concatMap, mergeMap, tap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as UserActions from './user.actions';
 import { Token } from '@angular/compiler';
+import {Router} from '@angular/router';
+
 
 
 
 @Injectable()
 export class UserEffects {
 
-    constructor(private userService: UserService, private actions$: Actions) { }
+    constructor(private userService: UserService, private actions$: Actions, private router: Router) { }
 
   login$ = createEffect(() =>
    this.actions$.pipe(
@@ -21,12 +23,16 @@ export class UserEffects {
       concatMap((action) =>
 
       this.userService.login({email: action.email, password :action.password}).pipe(
-            map(data => UserActions.loginSuccess({ data })),
+            map(data => {
+                          console.log("login successful")
+            console.log(data);
+              return UserActions.loginSuccess({ data })}),
             catchError(error => of(UserActions.loginFailure({ error }))))
          )
 
       )
         )
+
 
   //  register$ = createEffect(() =>
   //    this.actions$.pipe(
@@ -56,7 +62,10 @@ export class UserEffects {
 
        this.userService.register({email: action.email, password: action.password})
        .pipe(
-          map((data) => UserActions.registerSuccess({ data })),
+          map((data) => {
+            console.log("registration successful")
+            console.log(data);
+            return UserActions.registerSuccess({ data })}),
           catchError(error => of(UserActions.registerFailure({ error }))
         ),
 
@@ -80,6 +89,45 @@ export class UserEffects {
     //  )
     // )
     // )
+
+    navigateToWelcomeOnLogin$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActions.loginSuccess),
+        // map((action: UserActions.loginSuccess) => action),
+        tap(() => this.router.navigate([`/welcome`]))
+      ),
+    { dispatch: false }
+  );
+
+   navigateToWelcomeOnRegister$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActions.registerSuccess),
+        // map((action: UserActions.loginSuccess) => action),
+        tap(() => this.router.navigate([`/welcome`]))
+      ),
+    { dispatch: false }
+  );
+
+    // loginSuccess$ = createEffect(() => {
+    //   return this.actions$.pipe(
+    //     ofType(UserActions.loginSuccess),
+    //     tap(() => {
+    //       this.router.navigate(['/welcome'])
+    //     })
+    //   )
+    // })
+
+
+    // registerSuccess$ = createEffect(() => {
+    //   return this.actions$.pipe(
+    //     ofType(UserActions.registerSuccess),
+    //     tap(() => {
+    //       this.router.navigate(['/welcome'])
+    //     })
+    //   )
+    // })
   loadUsers$ = createEffect(() => {
     return this.actions$.pipe(
 

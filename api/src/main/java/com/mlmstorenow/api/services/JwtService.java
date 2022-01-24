@@ -29,27 +29,42 @@ public class JwtService {
 	static JWSSigner signer; // Create HMAC signer
 	@Setter
 	@Getter
-	static ArrayList<String> uname;
+	static ArrayList<String> uname = new ArrayList<>();
 
 	public SignedJWT tokenGenerator(String data) {
 
+		SignedJWT signedJWT = null;
+
+		JWSSigner signer = null;
 		try {
-			JWSSigner signer = new MACSigner(sharedSecret);
-
-			// Prepare JWT with claims set
-			JWTClaimsSet claimsSet = new JWTClaimsSet.Builder().subject(data).issuer("Localhost://4200").build();
-
-			SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
-
-			// Apply the HMAC protection
-			signedJWT.sign(signer);
-
-			uname.add(data);
-
-			return signedJWT;
-		} catch (JOSEException e) {
-			return null;
+			signer = new MACSigner(sharedSecret);
+		} catch (KeyLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		// Prepare JWT with claims set
+		JWTClaimsSet claimsSet = new JWTClaimsSet.Builder().subject(data).issuer("Localhost://4200").build();
+
+		signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+
+		// Apply the HMAC protection
+		try {
+			signedJWT.sign(signer);
+		} catch (JOSEException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		uname.add(data);
+
+		System.out.println("This is signer");
+		System.out.println(signer);
+
+		System.out.println("This is signedJWT");
+		System.out.println(signedJWT);
+
+		return signedJWT;
 
 	}
 

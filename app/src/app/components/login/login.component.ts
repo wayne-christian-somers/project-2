@@ -38,5 +38,6 @@ export class LoginComponent implements OnInit {
   // method called when "login" button is pressed in UI
   onSubmit(email: string, password: string) {
     this.store.dispatch(login({email: email, password: password}));
+    // this.loginForm.reset()
   }
 }

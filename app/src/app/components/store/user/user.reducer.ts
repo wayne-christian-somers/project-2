@@ -4,6 +4,7 @@ import * as UserActions from './user.actions';
 
 export const userFeatureKey = 'user';
 
+
 export interface User {
     email: string;
     password: string;
