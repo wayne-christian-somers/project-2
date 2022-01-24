@@ -11,7 +11,7 @@ export interface ProductsInCart {
 }
 
 export const initialState: ProductsInCart = {
-  productsInCart: fakeProducts.items
+  productsInCart: []
 };
 
 export const reducer = createReducer(
