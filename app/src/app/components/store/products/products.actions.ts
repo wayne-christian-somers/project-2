@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Product } from './products.reducer';
+import { Item, Payment, PaymentBody, Product, Shipment } from './products.reducer';
 
 export const loadProductss = createAction(
   '[Products] Load Products'
@@ -35,7 +35,19 @@ export const addProductToProducts = createAction(
   props<{product: Product}>()
 );
 
-// export const addProduct = createAction(
-//   '[Products] Add Product',
-//   props<{ Pr}>
-// )
+export const submitPayment = createAction(
+  '[Products] Submit Payment',
+  props<{payment: Payment, shipment: Shipment, items: Item[]}>()
+);
+
+export const submitPaymentSuccess  = createAction(
+  '[Products] Submit Payment Success',
+  props<{ data: any }>()
+);
+
+export const submitPaymentFailure  = createAction(
+  '[Products] Submit Payment Failure',
+  props<{ error: any }>()
+);
+
+

@@ -1,0 +1,3 @@
+{"payment":{"charge_amount":"4000", "nonce":"fake-valid-visa-nonce", "deviceData": "iphone"}
+,"shipment":{"name": "Bobby Hill","company":"Shippo","street1":"1010 Colorado Street","city":"Austin","state":"TX", "zip":"78701","country":"US","phone":"+1 512 463 5518", "email":"thatsmypurse@gmail.com"}
+,"items":[{"name":"purse", "amount":2}, {"name":"iphone", "amount":1}]}

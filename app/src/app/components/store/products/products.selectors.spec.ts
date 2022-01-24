@@ -7,6 +7,6 @@ describe('Products Selectors', () => {
       [fromProducts.productsFeatureKey]: {}
     });
 
-    expect(result).toEqual({});
+    expect(result).toEqual({products: []});
   });
 });
