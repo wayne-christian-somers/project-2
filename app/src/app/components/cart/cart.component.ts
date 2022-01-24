@@ -15,6 +15,7 @@ export class CartComponent implements OnInit {
   productsInCart$ : Observable<fromStore.ProductsInCart>;
   productsInCart : any[] = [];
 
+  
   constructor(private store: Store) { 
 
     this.productsInCart$ = store.select(selectCartState)
@@ -29,4 +30,11 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  subTotal() : number {
+    var sum = 0;
+    for (let productInCart of this.productsInCart) {
+      sum = sum + productInCart.salePrice; // 1, "string", false
+    }
+    return sum;
+  }
 }
