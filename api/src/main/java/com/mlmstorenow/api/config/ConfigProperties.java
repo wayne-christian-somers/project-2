@@ -22,14 +22,11 @@ public class ConfigProperties {
 
 			String home = System.getProperty("user.dir");
 			java.nio.file.Path path = java.nio.file.Paths.get(home, "src", "main", "resources", "Config.properties");
-			System.out.println("here is config.properties");
-			System.out.println(path);
 			boolean directoryExists = java.nio.file.Files.exists(path);
 			String pathString = path.toString();
 			if (!directoryExists) {
 				throw new RuntimeException();
 			}
-			// prop.load(new FileReader("src\\main\\resources\\Config.properties"));
 			prop.load(new FileReader(pathString));
 			return prop;
 		} catch (IOException e) {

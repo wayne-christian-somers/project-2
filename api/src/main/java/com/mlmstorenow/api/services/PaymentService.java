@@ -41,7 +41,7 @@ public class PaymentService {
 	// Transaction processor
 	public String processTransaction(String chargeAmount, String nonce, String deviceData) {
 
-		BigDecimal bd = BigDecimal.valueOf(Integer.parseInt(chargeAmount));
+		BigDecimal bd = BigDecimal.valueOf(Float.parseFloat(chargeAmount));
 		TransactionRequest request = new TransactionRequest().amount(bd)
 				.paymentMethodNonce(nonce).deviceData(deviceData).options().submitForSettlement(true).done();
 

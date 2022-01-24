@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.mlmstorenow.api.config.ConfigProperties;
-import com.mlmstorenow.api.models.Shipmnt;
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;

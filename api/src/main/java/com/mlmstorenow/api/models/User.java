@@ -44,13 +44,13 @@ public class User {
 	private String password;
 
 	@Column(name = "address_list")
-	private ArrayList<Address> Addresses;
+	private ArrayList<Address> Addresses = new ArrayList<Address>();
 
 	@Column(name = "cart")
-	private ArrayList<Product> cart;
+	private ArrayList<Product> cart = new ArrayList<Product>();
 
 	@Column(name = "order_history")
-	private ArrayList<Product> orderHistory;
+	private ArrayList<Product> orderHistory = new ArrayList<Product>();
 
 	public User(@Email @NotBlank String email, @NotBlank String password) {
 		super();

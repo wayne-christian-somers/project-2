@@ -29,7 +29,7 @@ public class JwtService {
 	static JWSSigner signer; // Create HMAC signer
 	@Setter
 	@Getter
-	static ArrayList<String> uname = new ArrayList<>();
+	private static ArrayList<String> uname = new ArrayList<>();
 
 	public SignedJWT tokenGenerator(String data) {
 
@@ -39,8 +39,8 @@ public class JwtService {
 		try {
 			signer = new MACSigner(sharedSecret);
 		} catch (KeyLengthException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			e.getMessage();
 		}
 
 		// Prepare JWT with claims set
@@ -52,17 +52,11 @@ public class JwtService {
 		try {
 			signedJWT.sign(signer);
 		} catch (JOSEException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			e.getMessage();
 		}
 
 		uname.add(data);
-
-		System.out.println("This is signer");
-		System.out.println(signer);
-
-		System.out.println("This is signedJWT");
-		System.out.println(signedJWT);
 
 		return signedJWT;
 
@@ -78,11 +72,12 @@ public class JwtService {
 			return signedJWT.verify(verifier);
 
 		} catch (KeyLengthException e) {
-
+			e.getMessage();
 		} catch (JOSEException e) {
-
+			e.getMessage();
 		} catch (java.text.ParseException e) {
-
+			e.getMessage();
+			
 		}
 		return false;
 	}

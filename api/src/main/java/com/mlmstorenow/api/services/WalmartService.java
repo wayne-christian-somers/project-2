@@ -1,6 +1,6 @@
 package com.mlmstorenow.api.services;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service; 
 import java.io.ObjectStreamException;
 import java.security.KeyRep;
 import java.security.PrivateKey;
@@ -12,73 +12,76 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
+
 @Service
 public class WalmartService {
 
 	public String signitureGenerator(String content) {
 
-	        String consumerId = "1de0df0a-9de1-47b5-bb45-2dc8f26c5ab2";
-	        String priviateKeyVersion = "1";
-	        String key = content; //YOUR FILE CONTENT HERE
+		String consumerId = "e395dc02-953b-40df-ab0f-97c4bcc3f664";
+		String priviateKeyVersion = "2";
+		String key = content; 
 
-	        long intimestamp = System.currentTimeMillis();
+		long intimestamp = System.currentTimeMillis();
 
-	        System.out.println("consumerId: " + consumerId);
-	        System.out.println("intimestamp: " + intimestamp);
+		Map<String, String> map = new HashMap<>();
+		map.put("WM_CONSUMER.ID", consumerId);
+		map.put("WM_CONSUMER.INTIMESTAMP", Long.toString(intimestamp));
+		map.put("WM_SEC.KEY_VERSION", priviateKeyVersion);
 
-	        Map<String, String> map = new HashMap<>();
-	        map.put("WM_CONSUMER.ID", consumerId);
-	        map.put("WM_CONSUMER.INTIMESTAMP", Long.toString(intimestamp));
-	        map.put("WM_SEC.KEY_VERSION", priviateKeyVersion);
+		String[] array = canonicalize(map);
 
-	        String[] array = canonicalize(map);
+		String data = null;
 
-	        String data = null;
+		try {
+			return generateSignature(key, array[1]);
+		} catch (Exception e) {
+		}
+		return "Signature: " + data;
+	}
 
-	        try {
-	            return generateSignature(key, array[1]);
-	        } catch(Exception e) { }
-	       return "Signature: " + data;
-	    }
-	    public String generateSignature(String key, String stringToSign) throws Exception {
-	        Signature signatureInstance = Signature.getInstance("SHA256WithRSA");
+	public String generateSignature(String key, String stringToSign) throws Exception {
+		Signature signatureInstance = Signature.getInstance("SHA256WithRSA");
 
-	        ServiceKeyRep keyRep = new ServiceKeyRep(KeyRep.Type.PRIVATE, "RSA", "PKCS#8", Base64.decodeBase64(key));
+		ServiceKeyRep keyRep = new ServiceKeyRep(KeyRep.Type.PRIVATE, "RSA", "PKCS#8", Base64.decodeBase64(key));
 
-	        PrivateKey resolvedPrivateKey = (PrivateKey) keyRep.readResolve();
+		PrivateKey resolvedPrivateKey = (PrivateKey) keyRep.readResolve();
 
-	        signatureInstance.initSign(resolvedPrivateKey);
+		signatureInstance.initSign(resolvedPrivateKey);
 
-	        byte[] bytesToSign = stringToSign.getBytes("UTF-8");
-	        signatureInstance.update(bytesToSign);
-	        byte[] signatureBytes = signatureInstance.sign();
+		byte[] bytesToSign = stringToSign.getBytes("UTF-8");
+		signatureInstance.update(bytesToSign);
+		byte[] signatureBytes = signatureInstance.sign();
 
-	        String signatureString = Base64.encodeBase64String(signatureBytes);
+		String signatureString = Base64.encodeBase64String(signatureBytes);
 
-	        return signatureString;
-	    }
-	    protected static String[] canonicalize(Map<String, String> headersToSign) {
-	        StringBuffer canonicalizedStrBuffer=new StringBuffer();
-	        StringBuffer parameterNamesBuffer=new StringBuffer();
-	        Set<String> keySet=headersToSign.keySet();
+		return signatureString;
+	}
 
-	        // Create sorted key set to enforce order on the key names
-	        SortedSet<String> sortedKeySet=new TreeSet<String>(keySet);
-	        for (String key :sortedKeySet) {
-	            Object val=headersToSign.get(key);
-	            parameterNamesBuffer.append(key.trim()).append(";");
-	            canonicalizedStrBuffer.append(val.toString().trim()).append("\n");
-	        }
-	        return new String[] {parameterNamesBuffer.toString(), canonicalizedStrBuffer.toString()};
-	    }
+	protected static String[] canonicalize(Map<String, String> headersToSign) {
+		StringBuffer canonicalizedStrBuffer = new StringBuffer();
+		StringBuffer parameterNamesBuffer = new StringBuffer();
+		Set<String> keySet = headersToSign.keySet();
 
-	    class ServiceKeyRep extends KeyRep  {
-	        private static final long serialVersionUID = -7213340660431987616L;
-	        public ServiceKeyRep(Type type, String algorithm, String format, byte[] encoded) {
-	            super(type, algorithm, format, encoded);
-	        }
-	        protected Object readResolve() throws ObjectStreamException {
-	            return super.readResolve();
-	        }
-	    }
+		// Create sorted key set to enforce order on the key names
+		SortedSet<String> sortedKeySet = new TreeSet<String>(keySet);
+		for (String key : sortedKeySet) {
+			Object val = headersToSign.get(key);
+			parameterNamesBuffer.append(key.trim()).append(";");
+			canonicalizedStrBuffer.append(val.toString().trim()).append("\n");
+		}
+		return new String[] { parameterNamesBuffer.toString(), canonicalizedStrBuffer.toString() };
+	}
+
+	class ServiceKeyRep extends KeyRep {
+		private static final long serialVersionUID = -7213340660431987616L;
+
+		public ServiceKeyRep(Type type, String algorithm, String format, byte[] encoded) {
+			super(type, algorithm, format, encoded);
+		}
+
+		protected Object readResolve() throws ObjectStreamException {
+			return super.readResolve();
+		}
+	}
 }

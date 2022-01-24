@@ -2,6 +2,7 @@ package com.mlmstorenow.api.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mlmstorenow.api.config.ConfigProperties;
+import com.mlmstorenow.api.models.Product;
 import com.mlmstorenow.api.models.User;
 import com.mlmstorenow.api.services.JwtService;
 import com.mlmstorenow.api.services.PaymentService;
@@ -50,30 +52,59 @@ public class OrderController {
 
 		String transact = pserv.processTransaction(pmap.get("charge_amount"), pmap.get("nonce"),
 				pmap.get("deviceData"));
-		
+
 		System.out.println(pmap.get("nonce"));
 		if (transact != null) {
 
 			try {
 				Optional<?> u = userv.getUserByUsername(JwtService.getUname().get(0));
 				User user = (User) u.get();
-				user.setAddresses(new ArrayList<Address>());
-				user.getAddresses().add(Address.create((HashMap<String, Object>) paymentMap.get("shipment"),ConfigProperties.getConfigProp("se_api_key")));
+				user.getAddresses().add(Address.create((HashMap<String, Object>) paymentMap.get("shipment"),
+						ConfigProperties.getConfigProp("se_api_key")));
 				Address addy = user.getAddresses().get(0);
+
+				Map<String, String> prodMap = (Map<String, String>) paymentMap.get("items");
+
+				Product prod = new Product();
+				for (String s : prodMap.keySet()) {
+					prod.setProductName(s);
+					prod.setAmount(Integer.parseInt(prodMap.get(s)));
+					prod.setUserid(user.getId());
+
+					user.getOrderHistory().add(prod);
+				}
+
 				return ResponseEntity.ok()
 						.body(shipserv.getShippingLabel((String) addy.getName(), (String) addy.getEmail(), addy));
 			} catch (AuthenticationException | InvalidRequestException | APIConnectionException | APIException e) {
 				e.printStackTrace();
-			} catch (ClassCastException | NullPointerException te) {
+			} catch (ClassCastException | NullPointerException | IndexOutOfBoundsException te) {
 
 				User user = new User();
 				try {
-					user.setAddresses(new ArrayList<Address>());
-					user.getAddresses().add(Address.create((HashMap<String, Object>) paymentMap.get("shipment"),ConfigProperties.getConfigProp("se_api_key")));
+					user.getAddresses().add(Address.create((HashMap<String, Object>) paymentMap.get("shipment"),
+							ConfigProperties.getConfigProp("se_api_key")));
 				} catch (AuthenticationException | InvalidRequestException | APIConnectionException | APIException e) {
 					e.printStackTrace();
 				}
 				Address addy = user.getAddresses().get(0);
+				System.out.println(paymentMap.get("items"));
+				ArrayList<LinkedHashMap<String, String>> prodMap = (ArrayList<LinkedHashMap<String, String>>) paymentMap
+						.get("items");
+
+				System.out.println(prodMap.get(0).keySet());
+				Product prod = new Product();
+
+				prodMap.stream().forEach(t -> {
+					for (String s : t.keySet()) {
+						prod.setProductName(s);
+						prod.setAmount(Integer.parseInt(t.get(s)));
+						prod.setUserid(user.getId());
+
+						user.getOrderHistory().add(prod);
+					}
+				});
+
 				return ResponseEntity.ok()
 						.body(shipserv.getShippingLabel((String) addy.getName(), (String) addy.getEmail(), addy));
 
