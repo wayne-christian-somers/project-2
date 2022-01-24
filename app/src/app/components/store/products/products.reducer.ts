@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as ProductsActions from './products.actions';
 import fakeProducts from '../../../../assets/fakeProducts.json'
 export const productsFeatureKey = 'products';
+import newfakeproducts from '../../../../assets/newfakeproducts.json'
 
 export interface Product {
 
@@ -12,7 +13,7 @@ export interface Products {
 }
 
 export const initialState: Products = {
-  products: fakeProducts.items,
+  products: newfakeproducts.products,
 };
 
 export interface PaymentBody {

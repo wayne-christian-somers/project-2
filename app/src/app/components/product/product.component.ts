@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit {
 
   addProductToCart() {
     console.log("add to cart button is clicked")
-    this.store.dispatch(addProductToCart({product: {}}))
+    this.store.dispatch(addProductToCart({product: this.product}))
   }
 
 }
