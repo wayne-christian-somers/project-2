@@ -19,3 +19,9 @@ export const addProductToCart = createAction(
   '[Cart] Add Cart',
   props<{ product: Product}>()
 )
+
+export const emptyCart = createAction(
+  '[Cart] Empty Cart' 
+)
+
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { EventEmitterService } from 'src/services/event-emitter.service';
 import * as fromStore from '../store/cart/cart.reducer';
 import { selectCartState } from '../store/cart/cart.selectors';
 import { Product } from '../store/products/products.reducer';
@@ -16,7 +17,7 @@ export class CartComponent implements OnInit {
   productsInCart : any[] = [];
 
   
-  constructor(private store: Store) { 
+  constructor(private store: Store, private eventEmitterService: EventEmitterService ) { 
 
     this.productsInCart$ = store.select(selectCartState)
 
@@ -28,10 +29,16 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.eventEmitterService.subsVar==undefined) {    
+      this.eventEmitterService.subsVar = this.eventEmitterService.    
+      invokeCartComponentFunction.subscribe((name:string) => {    
+        this.total();    
+      });    
+    }  
   }
 
-  subTotal() : number {
-    var sum = 0;
+  total() : number {
+    let sum = 0;
     for (let productInCart of this.productsInCart) {
       sum = sum + productInCart.salePrice; // 1, "string", false
     }
