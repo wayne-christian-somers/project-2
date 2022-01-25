@@ -68,7 +68,6 @@ public class ShipmentService {
 			// we select the first rate in this example
 			List<Rate> rates = shipment.getRates();
 			Rate rate = rates.get(0);
-			System.out.println(rate.getObjectId());
 
 			Map<String, Object> transParams = new HashMap<String, Object>();
 			transParams.put("rate", rate.getObjectId());
@@ -77,7 +76,6 @@ public class ShipmentService {
 			Transaction transaction = Transaction.create(transParams);
 
 			Map<String, Object> label = new HashMap<String, Object>();
-			System.out.println(transaction.getStatus());
 			if (transaction.getStatus().equals("SUCCESS")) {
 				label.put("label_url", transaction.getLabelUrl());
 				label.put("tracking_number", transaction.getTrackingNumber());

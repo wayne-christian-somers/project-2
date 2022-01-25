@@ -21,10 +21,8 @@ public class PaymentService {
 	// creates static braintreegateway object
 	public static BraintreeGateway getBraintreeGateway() {
 
-		BraintreeGateway gateway = new BraintreeGateway(
-				Environment.SANDBOX,
-				ConfigProperties.getConfigProp("mechant_id"),
-				ConfigProperties.getConfigProp("public_key"),
+		BraintreeGateway gateway = new BraintreeGateway(Environment.SANDBOX,
+				ConfigProperties.getConfigProp("mechant_id"), ConfigProperties.getConfigProp("public_key"),
 				ConfigProperties.getConfigProp("private_key"));
 		return gateway;
 	}
@@ -41,14 +39,12 @@ public class PaymentService {
 	public String processTransaction(String chargeAmount, String nonce, String deviceData) {
 
 		BigDecimal bd = BigDecimal.valueOf(Double.parseDouble(chargeAmount));
-		System.out.println(bd);
-		TransactionRequest request = new TransactionRequest().amount(bd)
-				.paymentMethodNonce(nonce).deviceData(deviceData).options().submitForSettlement(true).done();
+		TransactionRequest request = new TransactionRequest().amount(bd).paymentMethodNonce(nonce)
+				.deviceData(deviceData).options().submitForSettlement(true).done();
 
 		Result<Transaction> transactionResult = getBraintreeGateway().transaction().sale(request);
 		Transaction transaction;
 
-		System.out.println(transactionResult.getMessage());
 		if (transactionResult.isSuccess()) {
 			transaction = transactionResult.getTarget();
 

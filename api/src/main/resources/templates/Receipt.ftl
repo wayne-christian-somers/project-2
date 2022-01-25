@@ -290,7 +290,7 @@ a {
 											<tbody>
 												<tr>
 													<td class="content-block">
-														<h2>Thanks for using our app</h2>
+														<h2>Thanks for Shopping with MLMStore!</h2>
 													</td>
 												</tr>
 												<tr>
@@ -298,8 +298,8 @@ a {
 														<table class="invoice">
 															<tbody>
 																<tr>
-																	<td>Anna Smith<br>Invoice #12345<br>June
-																		01 2015
+																	<td>Customer: ${name}<br>Invoice Number: ${invoice_num}<br>
+																		Date: ${date}
 																	</td>
 																</tr>
 																<tr>
@@ -307,21 +307,15 @@ a {
 																		<table class="invoice-items" cellpadding="0"
 																			cellspacing="0">
 																			<tbody>
+																				<#list products as product>
 																				<tr>
-																					<td>Service 1</td>
-																					<td class="alignright">$ 20.00</td>
+																					<td>${product.productName}</td>
+																					<td class="alignright">${product.amount}</td>
 																				</tr>
-																				<tr>
-																					<td>Service 2</td>
-																					<td class="alignright">$ 10.00</td>
-																				</tr>
-																				<tr>
-																					<td>Service 3</td>
-																					<td class="alignright">$ 6.00</td>
-																				</tr>
+																				</#list>
 																				<tr class="total">
 																					<td class="alignright" width="80%">Total</td>
-																					<td class="alignright">$ 36.00</td>
+																					<td class="alignright">$ ${total}</td>
 																				</tr>
 																			</tbody>
 																		</table>
@@ -332,12 +326,13 @@ a {
 													</td>
 												</tr>
 												<tr>
-													<td class="content-block"><a href="#">View in
-															browser</a></td>
+													<td class="content-block">
+														<h3>Tracking Number: ${tracking}</h3>
+													</td>
 												</tr>
 												<tr>
-													<td class="content-block">Company Inc. 123 Van Ness,
-														San Francisco 94102</td>
+													<td class="content-block">ShopMLMStore.com Inc. 84
+														Rainey Street Arlen, TX 78753</td>
 												</tr>
 											</tbody>
 										</table>
