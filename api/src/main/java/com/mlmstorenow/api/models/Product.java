@@ -33,7 +33,7 @@ public class Product {
 	private String productName;
 	
 	@Column(name="product_amount")
-	private int amount;
+	private Double amount;
 	
 	@Column(name="user_id")
 	private int Userid;
