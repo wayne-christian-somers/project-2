@@ -13,7 +13,10 @@
 <div class="product-grid">
     <div class="product-image">
         <a href="#">
-            <img class="pic-1" [src]="product.largeImage">
+            <div id="img-container">
+                <img class="pic-1" [src]="product.images[0].href" id="img-size" >
+            </div>
+            
             <!-- <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo9/images/img-2.jpg"> -->
         </a>
         <ul class="social">

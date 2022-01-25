@@ -42,10 +42,13 @@ public class AccountController {
 	public ResponseEntity<?> registration(@RequestBody User user) {
 		String userEmail = user.getEmail();
 		if (userv.login(user.getEmail(), user.getPassword()) != null) {
-			userv.insertUser(user);
+			User u = userv.insertUser(user);
 
+			if(!u.equals(null)) {
 			String authorization = jws.tokenGenerator(userEmail).serialize();
+			
 			return ResponseEntity.ok().body(authorization);
+			}
 			// return ResponseEntity.ok().body(null);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

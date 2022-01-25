@@ -1,5 +1,6 @@
 package com.mlmstorenow.api.services;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -9,25 +10,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 
 @Service
 public class EmailService {
 
 	@Autowired
-	private SpringTemplateEngine thymeleafTemplateEngine;
+	private FreeMarkerConfigurer freemarkerConfigurer;
+	
+	@Autowired
+	JavaMailSender emailSender;
 
-	private JavaMailSender emailSender;
+	public void sendMessageUsingFreemarkerTemplate(
+	    String to, String subject, Map<String, Object> templateModel)
+	        throws IOException, TemplateException, MessagingException {
+	        
+	    Template freemarkerTemplate = freemarkerConfigurer.getConfiguration()
+	      .getTemplate("Receipt.ftl");
+	    String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
 
-	public void sendMessageUsingThymeleafTemplate(String to, String subject, Map<String, Object> templateModel)
-			throws MessagingException {
-
-		Context thymeleafContext = new Context();
-		thymeleafContext.setVariables(templateModel);
-		String htmlBody = thymeleafTemplateEngine.process("template-thymeleaf.html", thymeleafContext);
-
-		sendHtmlMessage(to, subject, htmlBody);
+	    sendHtmlMessage(to, subject, htmlBody);
 	}
 
 	private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {

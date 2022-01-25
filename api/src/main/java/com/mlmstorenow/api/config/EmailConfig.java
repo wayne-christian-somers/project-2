@@ -12,7 +12,7 @@ public class EmailConfig {
 
 	public FreeMarkerConfigurer freemarkerClassLoaderConfig() {
 		Configuration configuration = new Configuration(Configuration.VERSION_2_3_27);
-		TemplateLoader templateLoader = new ClassTemplateLoader(this.getClass(), "/mail-templates");
+		TemplateLoader templateLoader = new ClassTemplateLoader(this.getClass(), "/templates");
 		configuration.setTemplateLoader(templateLoader);
 		FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
 		freeMarkerConfigurer.setConfiguration(configuration);

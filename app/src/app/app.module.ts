@@ -29,6 +29,7 @@ import { ProductComponent } from './components/product/product.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CartIconComponent } from './components/cart-icon/cart-icon.component';
 import { PaymentComponent } from './components/payment/payment.component'
+import { EventEmitterService } from 'src/services/event-emitter.service';
 
  
 
@@ -65,7 +66,9 @@ import { PaymentComponent } from './components/payment/payment.component'
       provide: HTTP_INTERCEPTORS,
       useClass: AddHeaderInterceptor ,
       multi: true,
-    }],
+    },
+    EventEmitterService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

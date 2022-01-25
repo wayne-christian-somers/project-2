@@ -2,6 +2,7 @@ package com.mlmstorenow.api.services;
 
 import java.util.Optional;
 
+import org.hibernate.HibernateException;
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class UserService {
 		try {
 			return userrepo.save(u);
 		} catch (JDBCException e) {
+			e.printStackTrace();
+			return new User();
+		}catch (HibernateException e) {
+			e.printStackTrace();
 			return new User();
 		}
 	}

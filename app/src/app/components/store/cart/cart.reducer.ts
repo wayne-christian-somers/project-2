@@ -27,5 +27,10 @@ export const reducer = createReducer(
       productsInCart: newArrayWithAddedProduct
     }
     return newProductsObject
+  }),
+  
+  on(CartActions.emptyCart,  (state) => {
+    console.log('empty cart reducer is running')
+    return {productsInCart: []}
   })
-);
+)

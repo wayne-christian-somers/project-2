@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
+import { catchError, map, concatMap, tap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as ProductsActions from './products.actions';
+import * as CartActions from './../cart/cart.actions'
 import { ProductsService } from '../../../../services/products.service';
 import { UserService } from '../../../../services/user.service';
 import { PaymentsService } from '../../../../services/payments.service';
 import { PaymentBody } from 'src/app/components/store/products/products.reducer';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 
 
 @Injectable()
 export class ProductsEffects {
-constructor(private actions$: Actions, private productsService: ProductsService, private paymentsService: PaymentsService) {}
+constructor(private actions$: Actions, private productsService: ProductsService, private paymentsService: PaymentsService, private router: Router, private store: Store) {}
 
   loadProductss$ = createEffect(() =>
    this.actions$.pipe(
@@ -44,7 +47,19 @@ constructor(private actions$: Actions, private productsService: ProductsService,
     )
 
 
-
+    navigateToWelcomeOnSubmitPaymentSuccess$ = createEffect(
+      () =>
+        this.actions$.pipe(
+          ofType(ProductsActions.submitPaymentSuccess),
+          // map((action: UserActions.loginSuccess) => action),
+          tap(() => this.router.navigate([`/welcome`])),
+          tap(() => {
+            this.store.dispatch(CartActions.emptyCart())
+          })
+        ),
+      { dispatch: false }
+    );
+  
 
 
     submitPayment$ = createEffect(() =>
