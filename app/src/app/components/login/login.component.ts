@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { selectUserState } from '../store/user/user.selectors';
 import { User } from '../store/user/user.reducer';
 import { FormBuilder } from '@angular/forms';
+import { emptyCart } from '../store/cart/cart.actions';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(emptyCart())
   }
 
     getEmail = () : string => this.loginForm.get('email')?.value || "";
