@@ -23,11 +23,11 @@ export class PaymentComponent implements OnInit {
     firstName: [''],
     lastName: [''],
     street: [''],
-    company: [''],
+    // company: [''],
     city: [''],
     state: [''],
     zip: [''],
-    country: [''],
+    // country: ['United States'],
     phone: [''],
     email: ['']
   });
@@ -67,12 +67,12 @@ export class PaymentComponent implements OnInit {
 
     const shipmentObject : Shipment = {
       name: firstName + ' ' + lastName,
-      company: company,
+      company: 'MLM Store',
       street1: street,
       city: city,
       state: state,
       zip: zip,
-      country: country,
+      country: "United States",
       phone: phone,
       email: email
     }
